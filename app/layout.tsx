@@ -5,6 +5,13 @@ import { BackgroundVideo } from "@/app/components/background-video";
 export const metadata: Metadata = {
   title: "Meridian — Revenue Recovery Orchestrator",
   description: "Live Revenue Recovery Orchestrator & Real-Time Financial Heartbeat",
+  icons: {
+    icon: [
+      { url: "/meridian-logo.png", type: "image/png" },
+    ],
+    shortcut: "/meridian-logo.png",
+    apple: "/meridian-logo.png",
+  },
 };
 
 export default function RootLayout({

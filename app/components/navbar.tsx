@@ -13,8 +13,8 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo & Brand */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.06] backdrop-blur-md border border-white/15 group-hover:border-white/40 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.08)]">
-            <span className="w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)] animate-pulse" />
+          <div className="relative flex items-center justify-center w-8 h-8 rounded-lg overflow-hidden bg-white p-1 border border-white/20 group-hover:border-white/50 transition-all shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+            <img src="/meridian-logo.png" alt="Meridian" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
