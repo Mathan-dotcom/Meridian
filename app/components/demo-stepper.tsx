@@ -8,7 +8,7 @@ const DEMO_STEPS = [
     step: 1,
     time: "0:00–0:30",
     title: "1. Pitch & Problem",
-    summary: "Revenue leaks are disconnected today. Pulse is the orchestrator layer that decides which incident deserves attention first and why.",
+    summary: "Revenue leaks are disconnected today. Meridian is the orchestrator layer that decides which incident deserves attention first and why.",
     actionText: "Next: Review ERR Stream"
   },
   {
@@ -43,7 +43,7 @@ const DEMO_STEPS = [
     step: 6,
     time: "4:00–5:00",
     title: "6. Audit Trail & Positioning",
-    summary: "Immutable execution log records every telemetry signal, policy check, and outcome. Positioning: Razorpay has point agents; Pulse decides which gets called.",
+    summary: "Immutable execution log records every telemetry signal, policy check, and outcome. Positioning: Razorpay has point agents; Meridian decides which gets called.",
     actionText: "Restart Demo Flow"
   }
 ];

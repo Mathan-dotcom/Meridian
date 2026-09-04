@@ -25,7 +25,7 @@ const SCRIPT_STEPS = [
   },
   {
     time: "2:30–3:15",
-    title: "4. Live Execution & Exhale Pulse",
+    title: "4. Live Execution & Meridian Wave",
     talkingPoint: "Click EXECUTE RECOVERY. Point to the luminous white exhale bloom, live ERR re-sorting, and the rupee ledger ticking up as banking confirmation settles.",
     badge: "Live Action"
   },
@@ -38,7 +38,7 @@ const SCRIPT_STEPS = [
   {
     time: "4:00–5:00",
     title: "6. Audit Trail & Strategic Positioning",
-    talkingPoint: "Review the terminal audit log. Close with the definitive positioning line: 'Razorpay has specialized agents. Pulse is the layer that decides which one gets called, and proves it worked.'",
+    talkingPoint: "Review the terminal audit log. Close with the definitive positioning line: 'Razorpay has specialized agents. Meridian is the layer that decides which one gets called, and proves it worked.'",
     badge: "Close"
   }
 ];
@@ -100,7 +100,7 @@ export function DemoScriptSection() {
                 Experience the Live War Room Console
               </h3>
               <p className="font-ui text-sm text-zinc-300">
-                Test the real-time ERR re-ranking, node shifts on the Pulse Field canvas, counterfactual inspection modal, and the graceful failure rollback flow.
+                Test the real-time ERR re-ranking, node shifts on the Meridian Field canvas, counterfactual inspection modal, and the graceful failure rollback flow.
               </p>
             </div>
 

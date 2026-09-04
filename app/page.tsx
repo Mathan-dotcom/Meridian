@@ -32,7 +32,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-white">
               <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_white] animate-pulse" />
-              <span className="font-ui font-semibold text-sm">PULSE REVENUE RECOVERY ORCHESTRATOR</span>
+              <span className="font-ui font-semibold text-sm">MERIDIAN REVENUE RECOVERY ORCHESTRATOR</span>
             </div>
 
             <div className="flex items-center gap-4 text-xs font-mono">

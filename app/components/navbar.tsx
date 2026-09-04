@@ -18,7 +18,7 @@ export function Navbar() {
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-ui font-bold text-base tracking-tight text-white">PULSE</span>
+              <span className="font-ui font-bold text-base tracking-tight text-white">MERIDIAN</span>
               <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white/[0.08] text-white/90 border border-white/20 font-semibold backdrop-blur-sm">
                 v1.0
               </span>

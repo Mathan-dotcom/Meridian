@@ -18,7 +18,7 @@ export function MathSection() {
               The ERR Formula & Autonomy Scoring
             </h2>
             <p className="font-ui text-base sm:text-lg text-zinc-300 leading-relaxed">
-              Pulse replaces heuristic guesswork with deterministic mathematical modeling. This turns "here are three problems" into "work on this one first, and here is the exact math."
+              Meridian replaces heuristic guesswork with deterministic mathematical modeling. This turns "here are three problems" into "work on this one first, and here is the exact math."
             </p>
           </div>
         </ScrollFade>

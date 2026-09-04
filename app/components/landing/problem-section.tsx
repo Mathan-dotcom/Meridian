@@ -62,12 +62,12 @@ export function ProblemSection() {
             </div>
           </ScrollFade>
 
-          {/* Right: The Pulse Solution */}
+          {/* Right: The Meridian Solution */}
           <ScrollFade direction="up" delay={0.2} className="h-full">
             <div className="p-8 rounded-[var(--radius-pulse)] glass-panel-raised space-y-6 relative overflow-hidden h-full">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-micro uppercase text-white tracking-wider font-semibold">
-                  The Pulse Architecture
+                  The Meridian Architecture
                 </span>
                 <span className="px-2.5 py-1 rounded bg-white text-black font-mono text-[10px] font-bold shadow-[0_0_12px_rgba(255,255,255,0.4)]">
                   ORCHESTRATION LAYER
@@ -94,7 +94,7 @@ export function ProblemSection() {
               </ul>
 
               <div className="p-4 rounded bg-white/[0.04] border border-white/15 font-mono text-xs text-white">
-                "Razorpay has specialized point agents. Pulse is the layer that decides which one gets called, and proves it worked."
+                "Razorpay has specialized point agents. Meridian is the layer that decides which one gets called, and proves it worked."
               </div>
             </div>
           </ScrollFade>

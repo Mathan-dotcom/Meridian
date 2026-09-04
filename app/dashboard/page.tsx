@@ -90,7 +90,7 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-white">
             <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_white] animate-pulse" />
-            <span>PULSE REVENUE RECOVERY ORCHESTRATOR • RAZORPAY AI BUILDATHON TRACK 03</span>
+            <span>MERIDIAN REVENUE RECOVERY ORCHESTRATOR • RAZORPAY AI BUILDATHON TRACK 03</span>
           </div>
           <div className="text-zinc-400">
             Monochrome Glassmorphic Edition • ERR Engine • Counterfactual Estimation Model
