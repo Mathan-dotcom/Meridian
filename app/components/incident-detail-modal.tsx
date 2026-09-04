@@ -59,7 +59,7 @@ export function IncidentDetailModal() {
             const aiResult = liveAiDiagnosis[incident.id];
             const isDiagnosing = diagnosingIncidentId === incident.id;
             return (
-              <div className="p-5 rounded bg-white/[0.05] backdrop-blur-2xl border border-white/20 shadow-[0_0_25px_rgba(255,255,255,0.06)] space-y-3">
+              <div className="p-5 rounded bg-white/[0.05] backdrop-blur-2xl border border-white/20 shadow-[0_0_25px_rgba(255,255,255,0.06)] space-y-3 card-hover">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-white animate-pulse" />
@@ -122,7 +122,7 @@ export function IncidentDetailModal() {
           })()}
 
           {/* Section 1: Non-Causal Counterfactual Estimation (§9) */}
-          <div className="p-5 rounded bg-white/[0.03] backdrop-blur-xl border border-white/15 space-y-3">
+          <div className="p-5 rounded bg-white/[0.03] backdrop-blur-xl border border-white/15 space-y-3 card-hover">
             <div className="flex items-center justify-between text-micro font-mono text-white uppercase tracking-wider font-semibold">
               <span className="flex items-center gap-2">
                 <Activity className="w-4 h-4" /> Statistical Counterfactual Estimation Model (§9)
@@ -169,14 +169,14 @@ export function IncidentDetailModal() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white/[0.03] backdrop-blur-xl p-4 rounded border border-white/10 space-y-1">
+              <div className="bg-white/[0.03] backdrop-blur-xl p-4 rounded border border-white/10 space-y-1 card-hover-subtle">
                 <div className="text-micro font-mono uppercase text-zinc-400">Potential Lost Revenue</div>
                 <div className="text-2xl font-display text-white">
                   <TickingNumber value={incident.potentialLoss} />
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] backdrop-blur-xl p-4 rounded border border-white/10 space-y-1">
+              <div className="bg-white/[0.03] backdrop-blur-xl p-4 rounded border border-white/10 space-y-1 card-hover-subtle">
                 <div className="text-micro font-mono uppercase text-zinc-300">Top Candidate ERR</div>
                 <div className="text-2xl font-mono text-white font-semibold">
                   <TickingNumber value={incident.err} />
@@ -186,7 +186,7 @@ export function IncidentDetailModal() {
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] backdrop-blur-xl p-4 rounded border border-white/10 space-y-1">
+              <div className="bg-white/[0.03] backdrop-blur-xl p-4 rounded border border-white/10 space-y-1 card-hover-subtle">
                 <div className="text-micro font-mono uppercase text-zinc-400">Diagnostics Confidence</div>
                 <div className="text-2xl font-mono text-white font-semibold">
                   {incident.confidence}%
@@ -203,7 +203,7 @@ export function IncidentDetailModal() {
                 {incident.candidateInterventions.map((cand) => (
                   <div
                     key={cand.id}
-                    className={`p-4 rounded border flex flex-wrap md:flex-nowrap items-center justify-between gap-4 font-mono text-xs backdrop-blur-md ${
+                    className={`p-4 rounded border flex flex-wrap md:flex-nowrap items-center justify-between gap-4 font-mono text-xs backdrop-blur-md card-hover-subtle cursor-pointer ${
                       cand.isRecommended
                         ? "bg-white/[0.06] border-white/30 shadow-[0_0_15px_rgba(255,255,255,0.1)]"
                         : "bg-white/[0.02] border-white/5 opacity-70"
@@ -250,26 +250,26 @@ export function IncidentDetailModal() {
           </div>
 
           {/* Section 3: Autonomy Score Factors (§8.1) */}
-          <div className="p-5 rounded bg-white/[0.03] backdrop-blur-xl border border-white/10 space-y-3">
+          <div className="p-5 rounded bg-white/[0.03] backdrop-blur-xl border border-white/10 space-y-3 card-hover">
             <div className="flex items-center justify-between text-micro font-mono uppercase text-zinc-400 tracking-wider">
               <span>Autonomy Gate Formula Breakdown (§8.1)</span>
               <AutonomyBadge autonomy={incident.autonomy} />
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center font-mono text-xs">
-              <div className="p-2.5 rounded bg-black/60 border border-white/10">
+              <div className="p-2.5 rounded bg-black/60 border border-white/10 card-hover-subtle">
                 <div className="text-zinc-400 text-[10px]">Confidence</div>
                 <div className="text-white font-semibold text-sm">{(incident.autonomyFactors.confidence * 100).toFixed(0)}%</div>
               </div>
-              <div className="p-2.5 rounded bg-black/60 border border-white/10">
+              <div className="p-2.5 rounded bg-black/60 border border-white/10 card-hover-subtle">
                 <div className="text-zinc-400 text-[10px]">Reversibility</div>
                 <div className="text-white font-semibold text-sm">{(incident.autonomyFactors.reversibility * 100).toFixed(0)}%</div>
               </div>
-              <div className="p-2.5 rounded bg-black/60 border border-white/10">
+              <div className="p-2.5 rounded bg-black/60 border border-white/10 card-hover-subtle">
                 <div className="text-zinc-400 text-[10px]">Historical Weight</div>
                 <div className="text-white font-semibold text-sm">{incident.autonomyFactors.historicalSuccessWeight}</div>
               </div>
-              <div className="p-2.5 rounded bg-black/60 border border-white/10">
+              <div className="p-2.5 rounded bg-black/60 border border-white/10 card-hover-subtle">
                 <div className="text-zinc-400 text-[10px]">Blast Radius</div>
                 <div className="text-white font-semibold text-sm">Level {incident.autonomyFactors.blastRadius}/10</div>
               </div>

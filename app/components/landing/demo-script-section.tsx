@@ -67,7 +67,7 @@ export function DemoScriptSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SCRIPT_STEPS.map((step, idx) => (
             <ScrollFade key={idx} direction="up" delay={idx * 0.05} className="h-full">
-              <div className="p-6 rounded-[var(--radius-pulse)] glass-panel hover:border-white/30 transition-all flex flex-col justify-between space-y-4 h-full">
+              <div className="p-6 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer flex flex-col justify-between space-y-4 h-full">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-semibold text-white bg-white/10 px-2 py-0.5 rounded border border-white/20">
@@ -94,7 +94,7 @@ export function DemoScriptSection() {
 
         {/* Final CTA Bar */}
         <ScrollFade direction="up" delay={0.15}>
-          <div className="p-8 rounded-[var(--radius-pulse)] glass-panel-raised border border-white/20 shadow-[0_0_60px_rgba(255,255,255,0.06)] flex flex-wrap items-center justify-between gap-6">
+          <div className="p-8 rounded-[var(--radius-pulse)] glass-panel-raised card-hover border border-white/20 shadow-[0_0_60px_rgba(255,255,255,0.06)] flex flex-wrap items-center justify-between gap-6">
             <div className="space-y-2 max-w-2xl">
               <h3 className="font-display text-2xl md:text-3xl text-white font-normal">
                 Experience the Live War Room Console

@@ -61,7 +61,7 @@ export function HeaderHero() {
           {/* Secondary Stats Card — Frosted Glass Elevation */}
           <div className="lg:col-span-4">
             <ScrollFade direction="up" delay={0.15}>
-              <div className="glass-panel-raised p-6 rounded-[var(--radius-pulse)] space-y-4">
+              <div className="glass-panel-raised card-hover p-6 rounded-[var(--radius-pulse)] space-y-4 cursor-default">
                 <div className="flex items-center justify-between pb-3 border-b border-white/10">
                   <span className="font-ui text-micro text-zinc-300 font-semibold uppercase tracking-wider flex items-center gap-1.5">
                     <ShieldCheck className="w-4 h-4 text-white" /> Recovered Revenue

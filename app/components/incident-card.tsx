@@ -37,8 +37,9 @@ export function IncidentCard({ incident, rank }: IncidentCardProps) {
   return (
     <motion.div
       layoutId={incident.id}
+      whileHover={{ y: -8, scale: 1.015 }}
       transition={{ type: "spring", stiffness: 350, damping: 25 }}
-      className={`rounded-[var(--radius-pulse)] transition-all duration-300 font-ui relative overflow-hidden ${
+      className={`rounded-[var(--radius-pulse)] card-hover transition-all duration-300 font-ui relative overflow-hidden ${
         isTopRank ? "col-span-1 lg:col-span-2 p-7 md:p-8" : "col-span-1 p-6"
       } ${glassStateClasses}`}
     >

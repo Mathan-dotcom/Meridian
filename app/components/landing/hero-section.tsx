@@ -48,7 +48,7 @@ export function HeroSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
           {/* Card 1 */}
           <ScrollFade direction="up" delay={0.05}>
-            <div className="p-5 rounded-[var(--radius-pulse)] glass-panel space-y-2 h-full">
+            <div className="p-5 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer space-y-2 h-full">
               <div className="flex items-center justify-between text-micro font-mono text-zinc-400 uppercase tracking-wider">
                 <span>Recoverable Today</span>
                 <Zap className="w-4 h-4 text-white" />
@@ -64,7 +64,7 @@ export function HeroSection() {
 
           {/* Card 2 */}
           <ScrollFade direction="up" delay={0.1}>
-            <div className="p-5 rounded-[var(--radius-pulse)] glass-panel space-y-2 h-full">
+            <div className="p-5 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer space-y-2 h-full">
               <div className="flex items-center justify-between text-micro font-mono text-zinc-400 uppercase tracking-wider">
                 <span>Verified Recovered</span>
                 <ShieldCheck className="w-4 h-4 text-white" />
@@ -80,7 +80,7 @@ export function HeroSection() {
 
           {/* Card 3 */}
           <ScrollFade direction="up" delay={0.15}>
-            <div className="p-5 rounded-[var(--radius-pulse)] glass-panel space-y-2 h-full">
+            <div className="p-5 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer space-y-2 h-full">
               <div className="flex items-center justify-between text-micro font-mono text-zinc-400 uppercase tracking-wider">
                 <span>ERR Ranking Engine</span>
                 <Layers className="w-4 h-4 text-white" />
@@ -96,7 +96,7 @@ export function HeroSection() {
 
           {/* Card 4 */}
           <ScrollFade direction="up" delay={0.2}>
-            <div className="p-5 rounded-[var(--radius-pulse)] glass-panel space-y-2 h-full">
+            <div className="p-5 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer space-y-2 h-full">
               <div className="flex items-center justify-between text-micro font-mono text-zinc-400 uppercase tracking-wider">
                 <span>Autonomy Gate</span>
                 <Terminal className="w-4 h-4 text-white" />

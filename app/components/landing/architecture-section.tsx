@@ -89,7 +89,7 @@ export function ArchitectureSection() {
             const IconComp = step.icon;
             return (
               <ScrollFade key={step.step} direction="up" delay={idx * 0.05} className="h-full">
-                <div className="p-6 rounded-[var(--radius-pulse)] glass-panel hover:border-white/30 transition-all flex flex-col justify-between space-y-4 h-full">
+                <div className="p-6 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer flex flex-col justify-between space-y-4 h-full">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-white/[0.06] text-zinc-300 border border-white/10">
                       STAGE {step.step}
@@ -126,7 +126,7 @@ export function ArchitectureSection() {
 
         {/* Audit Trail Note Banner */}
         <ScrollFade direction="up" delay={0.15}>
-          <div className="p-6 rounded-[var(--radius-pulse)] glass-panel-raised flex flex-wrap md:flex-nowrap items-center justify-between gap-6 font-ui">
+          <div className="p-6 rounded-[var(--radius-pulse)] glass-panel-raised card-hover cursor-pointer flex flex-wrap md:flex-nowrap items-center justify-between gap-6 font-ui">
             <div className="space-y-1">
               <div className="font-mono text-micro text-white uppercase font-semibold flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-white" /> Output: Immutable Audit Trail (§7 & §8.4)

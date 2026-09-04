@@ -110,20 +110,20 @@ export function ScopeMatrix() {
 
         {/* Roadmap Items (§11) */}
         <ScrollFade direction="up" delay={0.15}>
-          <div className="p-6 rounded-[var(--radius-pulse)] glass-panel space-y-4 font-ui">
+          <div className="p-6 rounded-[var(--radius-pulse)] glass-panel card-hover space-y-4 font-ui">
             <div className="flex items-center gap-2 font-mono text-micro text-white/70 uppercase font-semibold">
               <Compass className="w-4 h-4 text-white" /> Explicit Post-Buildathon Roadmap (§11)
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-ui">
-              <div className="p-4 rounded-[var(--radius-pulse)] bg-white/[0.03] border border-white/10 space-y-1.5 backdrop-blur-md">
+              <div className="p-4 rounded-[var(--radius-pulse)] bg-white/[0.03] border border-white/10 space-y-1.5 backdrop-blur-md card-hover-subtle cursor-pointer">
                 <strong className="text-white font-semibold">1. Incident-Memory / RAG:</strong>
                 <p className="text-zinc-400">Semantic vector retrieval over historical incident resolutions and gateway SLA performance patterns.</p>
               </div>
-              <div className="p-4 rounded-[var(--radius-pulse)] bg-white/[0.03] border border-white/10 space-y-1.5 backdrop-blur-md">
+              <div className="p-4 rounded-[var(--radius-pulse)] bg-white/[0.03] border border-white/10 space-y-1.5 backdrop-blur-md card-hover-subtle cursor-pointer">
                 <strong className="text-white font-semibold">2. Learned Autonomy Weights:</strong>
                 <p className="text-zinc-400">Transitioning the synthetic Historical_Success_Weight into an empirically trained probability distribution.</p>
               </div>
-              <div className="p-4 rounded-[var(--radius-pulse)] bg-white/[0.03] border border-white/10 space-y-1.5 backdrop-blur-md">
+              <div className="p-4 rounded-[var(--radius-pulse)] bg-white/[0.03] border border-white/10 space-y-1.5 backdrop-blur-md card-hover-subtle cursor-pointer">
                 <strong className="text-white font-semibold">3. Multi-Agent Protocol:</strong>
                 <p className="text-zinc-400">Direct bilateral agent-to-agent handshake with Razorpay Agent Studio point agents.</p>
               </div>

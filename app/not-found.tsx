@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 text-center space-y-5 font-ui relative overflow-hidden">
-      <div className="p-8 rounded-[var(--radius-pulse)] glass-panel max-w-md w-full space-y-4 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.8)]">
+      <div className="p-8 rounded-[var(--radius-pulse)] glass-panel card-hover max-w-md w-full space-y-4 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.8)]">
         <div className="font-mono text-micro text-white/70 uppercase tracking-wider">
           404 — Not Found
         </div>

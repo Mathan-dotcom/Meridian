@@ -78,7 +78,7 @@ export function DemoStepper() {
   };
 
   return (
-    <div className="glass-panel-raised p-5 rounded-[var(--radius-pulse)] space-y-4 font-ui text-white">
+    <div className="glass-panel-raised card-hover p-5 rounded-[var(--radius-pulse)] space-y-4 font-ui text-white">
       {/* Header Stepper Navigation */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">

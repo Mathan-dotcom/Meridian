@@ -27,7 +27,7 @@ export function ProblemSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           {/* Left: What Exists Today */}
           <ScrollFade direction="up" delay={0.1} className="h-full">
-            <div className="p-8 rounded-[var(--radius-pulse)] glass-panel space-y-6 relative overflow-hidden h-full">
+            <div className="p-8 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer space-y-6 relative overflow-hidden h-full">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-micro uppercase text-zinc-400 tracking-wider font-semibold">
                   Current Landscape
@@ -64,7 +64,7 @@ export function ProblemSection() {
 
           {/* Right: The Meridian Solution */}
           <ScrollFade direction="up" delay={0.2} className="h-full">
-            <div className="p-8 rounded-[var(--radius-pulse)] glass-panel-raised space-y-6 relative overflow-hidden h-full">
+            <div className="p-8 rounded-[var(--radius-pulse)] glass-panel-raised card-hover cursor-pointer space-y-6 relative overflow-hidden h-full">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-micro uppercase text-white tracking-wider font-semibold">
                   The Meridian Architecture

@@ -27,7 +27,7 @@ export function MathSection() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Pillar 1: ERR Formula */}
           <ScrollFade direction="up" delay={0.05} className="h-full">
-            <div className="p-7 rounded-[var(--radius-pulse)] glass-panel space-y-6 flex flex-col justify-between h-full">
+            <div className="p-7 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer space-y-6 flex flex-col justify-between h-full">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-micro uppercase text-white font-semibold">
@@ -66,7 +66,7 @@ export function MathSection() {
 
           {/* Pillar 2: Autonomy Score */}
           <ScrollFade direction="up" delay={0.12} className="h-full">
-            <div className="p-7 rounded-[var(--radius-pulse)] glass-panel space-y-6 flex flex-col justify-between h-full">
+            <div className="p-7 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer space-y-6 flex flex-col justify-between h-full">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-micro uppercase text-white font-semibold">
@@ -105,7 +105,7 @@ export function MathSection() {
 
           {/* Pillar 3: Counterfactual Estimation */}
           <ScrollFade direction="up" delay={0.2} className="h-full">
-            <div className="p-7 rounded-[var(--radius-pulse)] glass-panel space-y-6 flex flex-col justify-between h-full">
+            <div className="p-7 rounded-[var(--radius-pulse)] glass-panel card-hover cursor-pointer space-y-6 flex flex-col justify-between h-full">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-micro uppercase text-white font-semibold">

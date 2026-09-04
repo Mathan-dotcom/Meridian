@@ -58,7 +58,7 @@ export function AuditTrail() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`p-3.5 rounded-r border-l-4 border-y border-r border-white/10 flex flex-wrap lg:flex-nowrap items-center justify-between gap-3 text-xs backdrop-blur-md hover:bg-white/[0.05] transition-colors ${statusBorderColor}`}
+                className={`p-3.5 rounded-r border-l-4 border-y border-r border-white/10 flex flex-wrap lg:flex-nowrap items-center justify-between gap-3 text-xs backdrop-blur-md card-hover-subtle cursor-pointer transition-colors ${statusBorderColor}`}
               >
                 {/* Left Meta: Timestamp & Log ID */}
                 <div className="flex items-center gap-3 shrink-0">
