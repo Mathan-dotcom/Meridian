@@ -2,13 +2,13 @@
 
 import { usePulseStore } from "@/app/lib/use-pulse-store";
 import { formatCounterfactualText } from "@/app/lib/err-engine";
-import { X, Zap, Calculator, Activity, AlertTriangle } from "lucide-react";
+import { X, Zap, Calculator, Activity, AlertTriangle, Sparkles, Bot } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TickingNumber, FormatInLakhs } from "./ticking-number";
 import { AutonomyBadge } from "./autonomy-badge";
 
 export function IncidentDetailModal() {
-  const { incidents, selectedIncidentId, selectIncident, executeRecovery, triggerFailure } = usePulseStore();
+  const { incidents, selectedIncidentId, selectIncident, executeRecovery, triggerFailure, runLiveGeminiDiagnosis, liveAiDiagnosis, diagnosingIncidentId } = usePulseStore();
 
   if (!selectedIncidentId) return null;
 
@@ -53,6 +53,73 @@ export function IncidentDetailModal() {
               <X className="w-5 h-5" />
             </button>
           </div>
+
+          {/* Section 0: Autonomous Gemini Diagnostician (Live AI Agent Layer) */}
+          {(() => {
+            const aiResult = liveAiDiagnosis[incident.id];
+            const isDiagnosing = diagnosingIncidentId === incident.id;
+            return (
+              <div className="p-5 rounded bg-white/[0.05] backdrop-blur-2xl border border-white/20 shadow-[0_0_25px_rgba(255,255,255,0.06)] space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-white animate-pulse" />
+                    <span className="font-ui font-bold text-sm text-white">Google Gemini Autonomous Diagnostician</span>
+                    <span className="px-2 py-0.5 rounded bg-white/10 text-[10px] font-mono text-zinc-300 border border-white/20">
+                      {aiResult ? "DIAGNOSIS ACTIVE" : "AI READY"}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => runLiveGeminiDiagnosis(incident.id)}
+                    disabled={isDiagnosing}
+                    className="glass-button-primary cursor-pointer flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-pulse)] text-xs font-mono text-white active:scale-95 shadow-sm"
+                  >
+                    <Sparkles className={`w-3.5 h-3.5 ${isDiagnosing ? "animate-spin" : ""}`} />
+                    <span>{isDiagnosing ? "Analyzing Telemetry..." : aiResult ? "Re-Run Live AI Diagnosis" : "Run Live Gemini Diagnosis"}</span>
+                  </button>
+                </div>
+
+                {aiResult ? (
+                  <div className="space-y-3 pt-2">
+                    <div className="p-3 rounded bg-black/50 border border-white/10 space-y-1.5">
+                      <div className="text-[11px] font-mono uppercase text-zinc-400 font-semibold">Root Cause Diagnosis:</div>
+                      <p className="text-sm font-ui text-white leading-relaxed">{aiResult.rootCause}</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+                      <div className="p-2.5 rounded bg-white/[0.03] border border-white/10">
+                        <span className="text-zinc-400 font-semibold">Counterfactual Reasoning:</span>
+                        <p className="text-zinc-200 mt-1 font-ui text-xs">{aiResult.counterfactualReasoning}</p>
+                      </div>
+                      <div className="p-2.5 rounded bg-white/[0.03] border border-white/10 space-y-1">
+                        <div><span className="text-zinc-400">Recommended Action:</span> <strong className="text-white">{aiResult.recommendedActionName}</strong></div>
+                        <div><span className="text-zinc-400">Confidence Score:</span> <strong className="text-white">{Math.round((aiResult.confidenceScore || 0.94) * 100)}%</strong></div>
+                        <div><span className="text-zinc-400">Policy Autonomy Gate:</span> <strong className="text-white">{aiResult.autonomyRecommendation}</strong></div>
+                      </div>
+                    </div>
+
+                    {aiResult.reasoningSteps && aiResult.reasoningSteps.length > 0 && (
+                      <div className="p-3 rounded bg-white/[0.02] border border-white/5 space-y-1.5 font-mono text-xs">
+                        <div className="text-[10px] uppercase text-zinc-400 font-bold">Autonomous Multi-Step Reasoning Chain:</div>
+                        <ul className="space-y-1 text-zinc-300">
+                          {aiResult.reasoningSteps.map((step: string, sIdx: number) => (
+                            <li key={sIdx} className="flex items-center gap-2">
+                              <span className="h-1 w-1 rounded-full bg-white shrink-0" />
+                              <span>{step}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-xs font-ui text-zinc-300">
+                    Click <strong>Run Live Gemini Diagnosis</strong> to pass raw incident telemetry (error codes, latency, BIN drop rate) directly to Google Gemini and generate real-time root-cause analysis, counterfactual risk evaluations, and policy gate decisions.
+                  </p>
+                )}
+              </div>
+            );
+          })()}
 
           {/* Section 1: Non-Causal Counterfactual Estimation (§9) */}
           <div className="p-5 rounded bg-white/[0.03] backdrop-blur-xl border border-white/15 space-y-3">

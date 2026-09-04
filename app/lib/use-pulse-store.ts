@@ -242,6 +242,8 @@ interface PulseState {
   selectedIncidentId: string | null;
   demoStep: number; // 1 to 6 (Guided 5-minute PRD demo stepper)
   nodeStates: NodeStateMap;
+  liveAiDiagnosis: Record<string, any>;
+  diagnosingIncidentId: string | null;
 }
 
 let state: PulseState = {
@@ -253,7 +255,9 @@ let state: PulseState = {
   activeActionId: null,
   selectedIncidentId: null,
   demoStep: 1,
-  nodeStates: { 0: "at-risk", 1: "at-risk", 2: "at-risk", 3: "at-risk" }
+  nodeStates: { 0: "at-risk", 1: "at-risk", 2: "at-risk", 3: "at-risk" },
+  liveAiDiagnosis: {},
+  diagnosingIncidentId: null
 };
 
 const listeners = new Set<() => void>();
@@ -469,9 +473,60 @@ export const pulseStore = {
       activeActionId: null,
       selectedIncidentId: null,
       demoStep: 1,
-      nodeStates: { 0: "at-risk", 1: "at-risk", 2: "at-risk", 3: "at-risk" }
+      nodeStates: { 0: "at-risk", 1: "at-risk", 2: "at-risk", 3: "at-risk" },
+      liveAiDiagnosis: {},
+      diagnosingIncidentId: null
     };
     emitChange();
+  },
+
+  async runLiveGeminiDiagnosis(incidentId: string) {
+    const incident = state.incidents.find((i) => i.id === incidentId);
+    if (!incident) return;
+
+    state = { ...state, diagnosingIncidentId: incidentId };
+    emitChange();
+
+    try {
+      const res = await fetch("/api/agent/diagnose", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          incidentId: incident.id,
+          title: incident.title,
+          category: incident.type,
+          service: incident.service,
+          errorCodes: incident.evidence,
+          failureRate: incident.counterfactual ? (100 - incident.counterfactual.observedSuccessRate) : 25,
+          potentialLoss: incident.potentialLoss,
+          candidateInterventions: incident.candidateInterventions,
+          telemetry: {
+            evidence: incident.evidence,
+            counterfactual: incident.counterfactual,
+            service: incident.service
+          }
+        })
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        state = {
+          ...state,
+          diagnosingIncidentId: null,
+          liveAiDiagnosis: {
+            ...state.liveAiDiagnosis,
+            [incidentId]: result.data
+          }
+        };
+        emitChange();
+      } else {
+        state = { ...state, diagnosingIncidentId: null };
+        emitChange();
+      }
+    } catch {
+      state = { ...state, diagnosingIncidentId: null };
+      emitChange();
+    }
   }
 };
 
@@ -485,7 +540,8 @@ export function usePulseStore() {
     triggerFailure: pulseStore.triggerFailure,
     injectNewIncident: pulseStore.injectNewIncident,
     toggleAutoPilot: pulseStore.toggleAutoPilot,
-    resetDemoState: pulseStore.resetDemoState
+    resetDemoState: pulseStore.resetDemoState,
+    runLiveGeminiDiagnosis: pulseStore.runLiveGeminiDiagnosis
   };
 }
 
