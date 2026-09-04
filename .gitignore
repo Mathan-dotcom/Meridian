@@ -1,0 +1,34 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Production & Build outputs
+/.next/
+/out/
+/build/
+/dist/
+
+# Next.js build cache & telemetry
+.next/cache/
+
+# Large root media files (app serves from public/torii.mp4)
+/*.3840x2160.mp4
+
+# Environment & Local configs
+.env*.local
+.env
+!.env.example
+
+# Debug / logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# OS Metadata
+.DS_Store
+Thumbs.db
