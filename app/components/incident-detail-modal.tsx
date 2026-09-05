@@ -83,13 +83,13 @@ export function IncidentDetailModal() {
                   <div className="space-y-3 pt-2">
                     <div className="p-3 rounded bg-black/50 border border-white/10 space-y-1.5">
                       <div className="text-[11px] font-mono uppercase text-zinc-400 font-semibold">Root Cause Diagnosis:</div>
-                      <p className="text-sm font-ui text-white leading-relaxed">{aiResult.rootCause}</p>
+                      <p className="text-sm font-ui text-white leading-relaxed text-justify">{aiResult.rootCause}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
                       <div className="p-2.5 rounded bg-white/[0.03] border border-white/10">
                         <span className="text-zinc-400 font-semibold">Counterfactual Reasoning:</span>
-                        <p className="text-zinc-200 mt-1 font-ui text-xs">{aiResult.counterfactualReasoning}</p>
+                        <p className="text-zinc-200 mt-1 font-ui text-xs text-justify">{aiResult.counterfactualReasoning}</p>
                       </div>
                       <div className="p-2.5 rounded bg-white/[0.03] border border-white/10 space-y-1">
                         <div><span className="text-zinc-400">Recommended Action:</span> <strong className="text-white">{aiResult.recommendedActionName}</strong></div>
@@ -113,7 +113,7 @@ export function IncidentDetailModal() {
                     )}
                   </div>
                 ) : (
-                  <p className="text-xs font-ui text-zinc-300">
+                  <p className="text-xs font-ui text-zinc-300 text-justify">
                     Click <strong>Run Live Gemini Diagnosis</strong> to pass raw incident telemetry (error codes, latency, BIN drop rate) directly to Google Gemini and generate real-time root-cause analysis, counterfactual risk evaluations, and policy gate decisions.
                   </p>
                 )}
@@ -132,7 +132,7 @@ export function IncidentDetailModal() {
               </span>
             </div>
 
-            <p className="text-sm font-ui text-zinc-200 italic bg-black/60 p-3 rounded border border-white/10">
+            <p className="text-sm font-ui text-zinc-200 italic bg-black/60 p-3 rounded border border-white/10 text-justify">
               "{cfText}"
             </p>
 
@@ -218,7 +218,7 @@ export function IncidentDetailModal() {
                         )}
                         <span>{cand.name}</span>
                       </div>
-                      <div className="text-zinc-400 text-[11px] font-ui">{cand.description}</div>
+                      <div className="text-zinc-400 text-[11px] font-ui text-justify">{cand.description}</div>
                     </div>
 
                     <div className="flex items-center gap-6 shrink-0 font-mono">

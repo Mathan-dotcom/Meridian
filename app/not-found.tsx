@@ -11,7 +11,7 @@ export default function NotFound() {
         <h1 className="font-display text-3xl sm:text-4xl font-semibold text-white tracking-tight">
           Payment Rail Route Unresolved
         </h1>
-        <p className="text-zinc-400 text-sm">
+        <p className="text-zinc-400 text-sm text-justify">
           The requested telemetry endpoint or route could not be found in the current orchestrator session.
         </p>
         <div className="pt-2">

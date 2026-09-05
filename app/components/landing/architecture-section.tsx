@@ -77,7 +77,7 @@ export function ArchitectureSection() {
             <h2 className="font-ui text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-tight">
               The 7-Layer Agentic Decision Pipeline
             </h2>
-            <p className="font-ui text-base sm:text-lg text-zinc-300 leading-relaxed">
+            <p className="font-ui text-base sm:text-lg text-zinc-300 leading-relaxed text-justify">
               A strict separation of concerns: <strong>LLMs are used exclusively for reasoning, explanation, and synthesis</strong> — never for anomaly detection, policy enforcement, or financial calculations. Those remain 100% deterministic and auditable.
             </p>
           </div>
@@ -94,7 +94,7 @@ export function ArchitectureSection() {
                     <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-white/[0.06] text-zinc-300 border border-white/10">
                       STAGE {step.step}
                     </span>
-                    <span className="font-mono text-[10px] uppercase px-2 py-0.5 rounded border border-white/15 bg-white/[0.04] text-white font-semibold">
+                    <span className="font-mono text-xs uppercase px-2 py-0.5 rounded border border-white/15 bg-white/[0.04] text-white font-semibold">
                       {step.badge}
                     </span>
                   </div>
@@ -109,7 +109,7 @@ export function ArchitectureSection() {
                     <div className="font-mono text-[11px] text-zinc-400">
                       {step.tech}
                     </div>
-                    <p className="font-ui text-xs text-zinc-300 leading-relaxed">
+                    <p className="font-ui text-xs text-zinc-300 leading-relaxed text-justify">
                       {step.job}
                     </p>
                   </div>
@@ -131,7 +131,7 @@ export function ArchitectureSection() {
               <div className="font-mono text-micro text-white uppercase font-semibold flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-white" /> Output: Immutable Audit Trail (§7 & §8.4)
               </div>
-              <p className="text-sm text-zinc-300">
+              <p className="text-sm text-zinc-300 text-justify">
                 Every pipeline pass logs evidence signals, counterfactual estimates, policy checks, autonomy factors, and settlement confirmations directly to the visible audit ledger.
               </p>
             </div>

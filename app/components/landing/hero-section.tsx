@@ -39,7 +39,7 @@ export function HeroSection() {
             </span>
           </h1>
 
-          <p className="font-ui text-lg sm:text-xl text-zinc-300 leading-relaxed max-w-3xl">
+          <p className="font-ui text-lg sm:text-xl text-zinc-300 leading-relaxed max-w-3xl text-justify">
             An agentic decision engine that continuously monitors live payment rails, diagnoses root causes with honest counterfactual estimation, ranks leaks by <strong>Expected Revenue Recovery (ERR)</strong>, executes the safest bounded intervention, and verifies whether the money actually came back.
           </p>
         </div>

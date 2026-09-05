@@ -52,7 +52,7 @@ export function HeaderHero() {
                   (<FormatInLakhs amountInRupees={totalRecoverableToday} />)
                 </span>
               </div>
-              <p className="font-ui text-body text-zinc-300 max-w-2xl leading-relaxed">
+              <p className="font-ui text-body text-zinc-300 max-w-2xl leading-relaxed text-justify">
                 An agentic decision engine watching payment streams in real time, diagnosing root causes with counterfactual estimation, ranking interventions by Expected Revenue Recovery (ERR), and verifying recovery outcomes.
               </p>
             </ScrollFade>

@@ -123,7 +123,7 @@ export function IncidentCard({ incident, rank }: IncidentCardProps) {
           {incident.evidence.map((ev, i) => (
             <li key={i} className="flex items-start gap-2.5 text-body text-zinc-200 text-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.8)] mt-2 shrink-0" />
-              <span>{ev}</span>
+              <span className="text-justify">{ev}</span>
             </li>
           ))}
         </ul>
@@ -134,7 +134,7 @@ export function IncidentCard({ incident, rank }: IncidentCardProps) {
         <div className="text-micro font-mono uppercase text-white mb-1 flex items-center gap-1.5">
           <Zap className="w-3.5 h-3.5 text-white" /> Chosen Intervention Orchestration
         </div>
-        <p className="text-sm font-ui text-zinc-300">
+        <p className="text-sm font-ui text-zinc-300 text-justify">
           {incident.intervention}
         </p>
       </div>
@@ -151,7 +151,7 @@ export function IncidentCard({ incident, rank }: IncidentCardProps) {
               Confidence: {Math.round((aiResult.confidenceScore || 0.94) * 100)}% • Lift: +{aiResult.estimatedLiftPercentage || 17}%
             </span>
           </div>
-          <p className="text-xs font-ui text-zinc-200 leading-relaxed">
+          <p className="text-xs font-ui text-zinc-200 leading-relaxed text-justify">
             {aiResult.rootCause}
           </p>
           <div className="text-[11px] font-mono text-zinc-400 pt-1 border-t border-white/10 flex items-center justify-between">

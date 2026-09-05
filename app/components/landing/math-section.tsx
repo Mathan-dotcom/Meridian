@@ -17,7 +17,7 @@ export function MathSection() {
             <h2 className="font-ui text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-tight">
               The ERR Formula & Autonomy Scoring
             </h2>
-            <p className="font-ui text-base sm:text-lg text-zinc-300 leading-relaxed">
+            <p className="font-ui text-base sm:text-lg text-zinc-300 leading-relaxed text-justify">
               Meridian replaces heuristic guesswork with deterministic mathematical modeling. This turns "here are three problems" into "work on this one first, and here is the exact math."
             </p>
           </div>
@@ -53,7 +53,7 @@ export function MathSection() {
                   </div>
                 </div>
 
-                <p className="font-ui text-xs text-zinc-300 leading-relaxed">
+                <p className="font-ui text-xs text-zinc-300 leading-relaxed text-justify">
                   Calculates the net recoverable value for every candidate intervention <em>a</em> against active incident <em>i</em>. Incidents are sorted dynamically by top candidate ERR.
                 </p>
               </div>
@@ -92,7 +92,7 @@ export function MathSection() {
                   </div>
                 </div>
 
-                <p className="font-ui text-xs text-zinc-300 leading-relaxed">
+                <p className="font-ui text-xs text-zinc-300 leading-relaxed text-justify">
                   Governs whether an intervention can auto-execute or requires human sign-off. High confidence with reversible impact on a localized blast radius auto-executes safely.
                 </p>
               </div>
@@ -121,16 +121,16 @@ export function MathSection() {
                 </h3>
 
                 {/* Example Quote */}
-                <div className="p-4 rounded bg-white/[0.04] border border-white/10 font-mono text-xs text-zinc-200 space-y-2 italic backdrop-blur-md">
+                <div className="p-4 rounded bg-white/[0.04] border border-white/10 font-mono text-xs text-zinc-200 space-y-2 italic backdrop-blur-md text-justify">
                   "Observed: 72%. Estimated rate without Gateway B: 89%. Counterfactual gap: +17pp. This increases confidence that Gateway B is a likely contributor."
                 </div>
 
-                <p className="font-ui text-xs text-zinc-300 leading-relaxed">
+                <p className="font-ui text-xs text-zinc-300 leading-relaxed text-justify">
                   Strict adherence to honest statistical framing. We never claim causal proof — we quantify the counterfactual gap between observed metrics and simulated counterfactual baselines.
                 </p>
               </div>
 
-              <div className="p-3 rounded bg-white/[0.02] border border-white/10 font-mono text-[11px] text-zinc-300">
+              <div className="p-3 rounded bg-white/[0.02] border border-white/10 font-mono text-[11px] text-zinc-300 text-justify">
                 Preempts judge pushback: honestly modeled, scientifically defensible.
               </div>
             </div>

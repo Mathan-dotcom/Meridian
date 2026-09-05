@@ -17,7 +17,7 @@ export function ProblemSection() {
             <h2 className="font-ui text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-tight">
               Revenue leaks are disconnected today.
             </h2>
-            <p className="font-ui text-base sm:text-lg text-zinc-300 leading-relaxed">
+            <p className="font-ui text-base sm:text-lg text-zinc-300 leading-relaxed text-justify">
               Merchants lose revenue across multiple, fragmented failure modes simultaneously — degrading banking gateways, expired recurring card tokens, abandoned checkouts, and overdue receivables. Today, each requires separate manual triage.
             </p>
           </div>
@@ -41,7 +41,7 @@ export function ProblemSection() {
                 Siloed Point Agents Without Priority
               </h3>
 
-              <ul className="space-y-4 text-sm font-ui text-zinc-300">
+              <ul className="space-y-4 text-sm font-ui text-zinc-300 text-justify">
                 <li className="flex items-start gap-3">
                   <span className="h-1.5 w-1.5 rounded-full bg-zinc-500 mt-2 shrink-0" />
                   <span><strong>No unified prioritization:</strong> When an ICICI UPI pool drops and an HDFC subscription rail times out at the same time, which problem gets fixed first?</span>
@@ -56,7 +56,7 @@ export function ProblemSection() {
                 </li>
               </ul>
 
-              <div className="p-4 rounded bg-white/[0.04] backdrop-blur-md border border-white/10 font-mono text-xs text-zinc-400">
+              <div className="p-4 rounded bg-white/[0.04] backdrop-blur-md border border-white/10 font-mono text-xs text-zinc-400 text-justify">
                 Result: Ops teams drown in alert fatigue while high-value leaks bleed quietly in the background.
               </div>
             </div>
@@ -78,7 +78,7 @@ export function ProblemSection() {
                 An Orchestrator that Ranks, Acts & Verifies
               </h3>
 
-              <ul className="space-y-4 text-sm font-ui text-zinc-200">
+              <ul className="space-y-4 text-sm font-ui text-zinc-200 text-justify">
                 <li className="flex items-start gap-3">
                   <span className="h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.8)] mt-2 shrink-0" />
                   <span><strong>Mathematical ERR Ranking:</strong> Calculates Expected Revenue Recovery in real-time (ERR = Loss × P(rec) × E(succ) − Cost − Risk) to prioritize highest recoverable value.</span>
@@ -93,7 +93,7 @@ export function ProblemSection() {
                 </li>
               </ul>
 
-              <div className="p-4 rounded bg-white/[0.04] border border-white/15 font-mono text-xs text-white">
+              <div className="p-4 rounded bg-white/[0.04] border border-white/15 font-mono text-xs text-white text-justify">
                 "Razorpay has specialized point agents. Meridian is the layer that decides which one gets called, and proves it worked."
               </div>
             </div>

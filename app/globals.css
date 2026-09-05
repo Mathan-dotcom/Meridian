@@ -63,6 +63,26 @@ body {
   overflow-x: hidden;
 }
 
+/* Universal Text Justification & Clean Alignment */
+p {
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: left;
+}
+
+.text-justify {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+  text-align-last: left !important;
+}
+
+.text-body,
+.card-description {
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: left;
+}
+
 /* Glassmorphism Design System */
 .glass-panel {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);

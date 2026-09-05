@@ -198,7 +198,7 @@ export function AiCopilotDrawer() {
                           : "bg-white/[0.04] border border-white/10 text-zinc-200"
                       }`}
                     >
-                      <div className="whitespace-pre-line text-xs sm:text-sm font-ui">{m.text}</div>
+                      <div className="whitespace-pre-line text-xs sm:text-sm font-ui text-justify">{m.text}</div>
                       <div className="text-[10px] font-mono text-zinc-500 mt-1 text-right">
                         {m.timestamp}
                       </div>

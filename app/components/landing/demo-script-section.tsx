@@ -57,7 +57,7 @@ export function DemoScriptSection() {
             <h2 className="font-ui text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-tight">
               The 5-Minute Live Demo Flow
             </h2>
-            <p className="font-ui text-base sm:text-lg text-zinc-400 leading-relaxed">
+            <p className="font-ui text-base sm:text-lg text-zinc-400 leading-relaxed text-justify">
               The exact script and timing designed to win the judges' trust in under five minutes on a projector. Built directly into the interactive War Room stepper.
             </p>
           </div>
@@ -78,7 +78,7 @@ export function DemoScriptSection() {
                     </span>
                   </div>
                   <h3 className="font-ui text-base font-semibold text-white">{step.title}</h3>
-                  <p className="font-ui text-xs text-zinc-300 leading-relaxed">
+                  <p className="font-ui text-xs text-zinc-300 leading-relaxed text-justify">
                     {step.talkingPoint}
                   </p>
                 </div>
@@ -99,7 +99,7 @@ export function DemoScriptSection() {
               <h3 className="font-display text-2xl md:text-3xl text-white font-normal">
                 Experience the Live War Room Console
               </h3>
-              <p className="font-ui text-sm text-zinc-300">
+              <p className="font-ui text-sm text-zinc-300 text-justify">
                 Test the real-time ERR re-ranking, node shifts on the Meridian Field canvas, counterfactual inspection modal, and the graceful failure rollback flow.
               </p>
             </div>

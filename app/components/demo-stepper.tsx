@@ -115,7 +115,7 @@ export function DemoStepper() {
 
       {/* Summary Box */}
       <div className="p-3.5 rounded bg-white/[0.03] backdrop-blur-md border border-white/10 flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 text-xs font-ui">
-        <p className="text-zinc-200 text-sm flex-1">{current.summary}</p>
+        <p className="text-zinc-200 text-sm flex-1 text-justify">{current.summary}</p>
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 shrink-0 font-mono">
