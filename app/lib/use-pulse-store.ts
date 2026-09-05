@@ -232,6 +232,14 @@ const INITIAL_AUDIT_LOGS: AuditLog[] = [
   }
 ];
 
+export interface ToastNotification {
+  id: string;
+  title: string;
+  message: string;
+  type: "success" | "warning" | "info";
+  timestamp: string;
+}
+
 interface PulseState {
   incidents: Incident[];
   auditLogs: AuditLog[];
@@ -244,6 +252,7 @@ interface PulseState {
   nodeStates: NodeStateMap;
   liveAiDiagnosis: Record<string, any>;
   diagnosingIncidentId: string | null;
+  toast: ToastNotification | null;
 }
 
 let state: PulseState = {
@@ -257,7 +266,8 @@ let state: PulseState = {
   demoStep: 1,
   nodeStates: { 0: "at-risk", 1: "at-risk", 2: "at-risk", 3: "at-risk" },
   liveAiDiagnosis: {},
-  diagnosingIncidentId: null
+  diagnosingIncidentId: null,
+  toast: null
 };
 
 const listeners = new Set<() => void>();
@@ -265,6 +275,53 @@ const listeners = new Set<() => void>();
 function emitChange() {
   for (const listener of listeners) {
     listener();
+  }
+}
+
+let autoPilotTimer: any = null;
+
+function runAutoPilotCycle() {
+  if (!state.autoPilot) return;
+
+  // Find unrecovered incidents
+  const atRiskIncidents = state.incidents.filter((i) => i.state === "at-risk");
+  if (atRiskIncidents.length === 0) {
+    pulseStore.injectFault("random");
+    return;
+  }
+
+  // Take the top ERR ranked incident
+  const topInc = atRiskIncidents[0];
+
+  // 1. Run live Gemini diagnosis if not yet diagnosed
+  if (!state.liveAiDiagnosis[topInc.id] && !state.diagnosingIncidentId) {
+    pulseStore.runLiveGeminiDiagnosis(topInc.id);
+  }
+
+  // 2. Check autonomy safety bounds
+  if (topInc.autonomy === "AUTO" || topInc.autonomyFactors.calculatedScore >= 0.50) {
+    pulseStore.showToast(
+      "⚡ Autonomous Intervention Fired",
+      `Meridian Agent auto-executing recovery for ${topInc.title}`,
+      "info"
+    );
+
+    setTimeout(() => {
+      if (!state.autoPilot) return;
+      pulseStore.executeRecovery(topInc.id);
+      pulseStore.showToast(
+        "✓ Autonomous Recovery Verified",
+        `Protected ₹${(topInc.potentialLoss / 100000).toFixed(1)}L on ${topInc.service}. Audit hash sealed.`,
+        "success"
+      );
+    }, 1200);
+  } else {
+    // High blast radius -> hold for human approval
+    pulseStore.showToast(
+      "⚠️ Human Authorization Gate",
+      `${topInc.title} has blast radius Level ${topInc.autonomyFactors.blastRadius}/10. Escalated for operator sign-off.`,
+      "warning"
+    );
   }
 }
 
@@ -276,8 +333,26 @@ export const pulseStore = {
   getSnapshot() {
     return state;
   },
-  
-  // Actions
+
+  showToast(title: string, message: string, type: "success" | "warning" | "info" = "info") {
+    state = {
+      ...state,
+      toast: {
+        id: `toast-${Date.now()}`,
+        title,
+        message,
+        type,
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })
+      }
+    };
+    emitChange();
+  },
+
+  dismissToast() {
+    state = { ...state, toast: null };
+    emitChange();
+  },
+
   selectIncident(id: string | null) {
     state = { ...state, selectedIncidentId: id };
     emitChange();
@@ -355,7 +430,14 @@ export const pulseStore = {
       ...state,
       activeActionId: id,
       incidents: state.incidents.map((i) =>
-        i.id === id ? { ...i, state: "failed" as IncidentState, failureReason: "Circuit breaker tripped: Policy rule violation during secondary route attempt", lastActionAt: Date.now() } : i
+        i.id === id
+          ? {
+              ...i,
+              state: "failed" as IncidentState,
+              failureReason: "Circuit breaker tripped: Policy rule violation during secondary route attempt",
+              lastActionAt: Date.now()
+            }
+          : i
       )
     };
     emitChange();
@@ -366,17 +448,17 @@ export const pulseStore = {
         timestamp: new Date().toISOString().substring(11, 19) + " UTC",
         incidentId: id,
         incidentTitle: inc.title,
-        evidence: "Circuit breaker tripped: Secondary route latency exceeded 6,000ms SLA",
-        counterfactualGap: `+${inc.counterfactual.counterfactualGap}pp`,
-        errScore: inc.err,
+        evidence: "Intervention breached max bank retry threshold (Rule #4)",
+        counterfactualGap: "+0pp (Rollback triggered)",
+        errScore: 0,
         confidence: inc.confidence,
-        autonomyScore: inc.autonomyFactors.calculatedScore,
-        policyCheck: "FAILED & ROLLED BACK — Escalated to human approval queue (§14)",
+        autonomyScore: 0.12,
+        policyCheck: "ROLLED BACK — Autonomous circuit breaker flinched and reverted route safely.",
         outcome: "failed",
-        amount: inc.potentialLoss
+        amount: 0
       };
 
-      const newNodeStates = { ...state.nodeStates, [inc.regionIndex]: "critical" as const };
+      const newNodeStates: NodeStateMap = { ...state.nodeStates, [inc.regionIndex]: "critical" };
 
       state = {
         ...state,
@@ -388,44 +470,138 @@ export const pulseStore = {
     }, 350);
   },
 
-  injectNewIncident() {
-    const randomId = `INC-${Math.floor(9000 + Math.random() * 999)}`;
-    const newInc: Incident = {
-      id: randomId,
-      title: "Paytm Auto-Debit Security Cryptogram Mismatch",
-      service: "Paytm Payments Bank / Razorpay Subscriptions",
-      type: "gateway_degradation",
-      depth: "deep",
-      potentialLoss: 520000,
-      err: 410000,
-      confidence: 86,
-      counterfactual: {
-        observedSuccessRate: 64,
-        estimatedRateWithoutAnomaly: 88,
-        counterfactualGap: 24,
-        telemetrySummary: "OAuth token mismatch detected during off-session charge pool"
-      },
-      candidateInterventions: [
-        {
-          id: "INT-7",
-          name: "Re-synchronize HSM key cache and execute token repair pipeline",
-          probabilityOfRecovery: 0.84,
-          expectedSuccessRate: 0.92,
-          interventionCost: 5000,
-          riskPenalty: 0,
-          errScore: calculateERR(520000, 0.84, 0.92, 5000, 0),
-          description: "Flushes stale HSM cryptogram tokens and executes hot re-keying.",
-          isRecommended: true
-        }
-      ],
-      autonomyFactors: calculateAutonomyScore(0.86, 0.70, 0.80, 5),
-      evidence: ["Error code 403 on recurring subscription mandate pool", "HSM key rotation sync lag"],
-      intervention: "Re-synchronize HSM key cache and execute token repair pipeline",
-      autonomy: "NEEDS APPROVAL",
-      state: "at-risk",
-      timestamp: new Date().toISOString().substring(11, 19) + " UTC",
-      regionIndex: 1
-    };
+  injectFault(type: "hdfc" | "visa" | "npci" | "random" = "random") {
+    const selectedType = type === "random"
+      ? (["hdfc", "visa", "npci"][Math.floor(Math.random() * 3)] as "hdfc" | "visa" | "npci")
+      : type;
+
+    const randomId = `INC-${Math.floor(9100 + Math.random() * 899)}`;
+    let newInc: Incident;
+
+    if (selectedType === "hdfc") {
+      newInc = {
+        id: randomId,
+        title: "HDFC NetBanking Core Switch 504 Gateway Timeout",
+        service: "HDFC Payment Gateway / Corporate NetBanking",
+        type: "gateway_degradation",
+        depth: "deep",
+        potentialLoss: 580000,
+        err: 495000,
+        confidence: 95,
+        counterfactual: {
+          observedSuccessRate: 66,
+          estimatedRateWithoutAnomaly: 94,
+          counterfactualGap: 28,
+          telemetrySummary: "TCP window zero-advertisement and 504 gateway timeouts on primary HDFC netbanking pool"
+        },
+        candidateInterventions: [
+          {
+            id: "INT-HDFC-1",
+            name: "Hot-swap routing to Axis NetBanking secondary direct pipe",
+            probabilityOfRecovery: 0.94,
+            expectedSuccessRate: 0.97,
+            interventionCost: 4500,
+            riskPenalty: 0,
+            errScore: calculateERR(580000, 0.94, 0.97, 4500, 0),
+            description: "Direct reroute of pending corporate checkouts via secondary bank switch with exponential backoff.",
+            isRecommended: true
+          }
+        ],
+        autonomyFactors: calculateAutonomyScore(0.95, 0.95, 0.90, 1),
+        evidence: [
+          "HTTP 504 gateway timeout on /v1/payments/netbanking",
+          "Average gateway latency surged from 180ms to 6,200ms",
+          "Merchant checkout drop-off rate +34% across high-AOV carts"
+        ],
+        intervention: "Hot-swap routing to Axis NetBanking secondary direct pipe",
+        autonomy: "AUTO",
+        state: "at-risk",
+        timestamp: new Date().toISOString().substring(11, 19) + " UTC",
+        regionIndex: 0
+      };
+    } else if (selectedType === "visa") {
+      newInc = {
+        id: randomId,
+        title: "Visa Token Service (VTS) Cryptogram Invalidation Surge",
+        service: "Visa Direct / CyberSource Token Vault",
+        type: "subscription_failure",
+        depth: "deep",
+        potentialLoss: 340000,
+        err: 290000,
+        confidence: 91,
+        counterfactual: {
+          observedSuccessRate: 75,
+          estimatedRateWithoutAnomaly: 93,
+          counterfactualGap: 18,
+          telemetrySummary: "Cryptogram expiration rejection spike (VTS-400) during recurring card subscription cycle"
+        },
+        candidateInterventions: [
+          {
+            id: "INT-VISA-1",
+            name: "Trigger bulk cryptogram re-synchronization via Visa VTS REST API",
+            probabilityOfRecovery: 0.90,
+            expectedSuccessRate: 0.95,
+            interventionCost: 3000,
+            riskPenalty: 0,
+            errScore: calculateERR(340000, 0.90, 0.95, 3000, 0),
+            description: "Proactively requests refreshed cryptograms before executing secondary recurring auth.",
+            isRecommended: true
+          }
+        ],
+        autonomyFactors: calculateAutonomyScore(0.91, 0.90, 0.88, 2),
+        evidence: [
+          "Visa token authorization error VTS-400 invalid cryptogram",
+          "Recurring billing checkout failure rate peaked at 25%",
+          "1,450 subscription accounts impacted"
+        ],
+        intervention: "Trigger bulk cryptogram re-synchronization via Visa VTS REST API",
+        autonomy: "AUTO",
+        state: "at-risk",
+        timestamp: new Date().toISOString().substring(11, 19) + " UTC",
+        regionIndex: 2
+      };
+    } else {
+      newInc = {
+        id: randomId,
+        title: "NPCI UPI Mandate Queue Throttle Spike",
+        service: "NPCI Common Switch / ICICI UPI Pool",
+        type: "gateway_degradation",
+        depth: "deep",
+        potentialLoss: 780000,
+        err: 580000,
+        confidence: 87,
+        counterfactual: {
+          observedSuccessRate: 61,
+          estimatedRateWithoutAnomaly: 92,
+          counterfactualGap: 31,
+          telemetrySummary: "NPCI code 92 throttle limit breached on primary mandate auto-debit batch"
+        },
+        candidateInterventions: [
+          {
+            id: "INT-NPCI-1",
+            name: "Switch to dedicated high-frequency server-to-server NPCI pipe with burst smoothing",
+            probabilityOfRecovery: 0.86,
+            expectedSuccessRate: 0.90,
+            interventionCost: 12000,
+            riskPenalty: 10000,
+            errScore: calculateERR(780000, 0.86, 0.90, 12000, 10000),
+            description: "Applies burst smoothing rate-limiter and splits load across secondary bank pools.",
+            isRecommended: true
+          }
+        ],
+        autonomyFactors: calculateAutonomyScore(0.87, 0.60, 0.80, 8),
+        evidence: [
+          "NPCI error code 92: Mandate throttle limit reached on primary pool",
+          "Mandate queue backlog reached 4,200 pending transactions",
+          "Blast radius covers multi-bank recurring debit stream"
+        ],
+        intervention: "Switch to dedicated high-frequency server-to-server NPCI pipe with burst smoothing",
+        autonomy: "NEEDS APPROVAL",
+        state: "at-risk",
+        timestamp: new Date().toISOString().substring(11, 19) + " UTC",
+        regionIndex: 1
+      };
+    }
 
     const newIncidents = [newInc, ...state.incidents].sort((a, b) => {
       if (a.state === "recovered" && b.state !== "recovered") return 1;
@@ -439,7 +615,7 @@ export const pulseStore = {
       incidentId: newInc.id,
       incidentTitle: newInc.title,
       evidence: newInc.evidence[0],
-      counterfactualGap: "+24pp (64% -> 88%)",
+      counterfactualGap: `+${newInc.counterfactual.counterfactualGap}pp (${newInc.counterfactual.observedSuccessRate}% -> ${newInc.counterfactual.estimatedRateWithoutAnomaly}%)`,
       errScore: newInc.err,
       confidence: newInc.confidence,
       autonomyScore: newInc.autonomyFactors.calculatedScore,
@@ -452,18 +628,55 @@ export const pulseStore = {
       ...state,
       incidents: newIncidents,
       auditLogs: [newLog, ...state.auditLogs],
-      totalRecoverableToday: state.totalRecoverableToday + 520000,
-      nodeStates: { ...state.nodeStates, 1: "at-risk" }
+      totalRecoverableToday: state.totalRecoverableToday + newInc.potentialLoss,
+      nodeStates: { ...state.nodeStates, [newInc.regionIndex]: "at-risk" }
     };
     emitChange();
+
+    pulseStore.showToast(
+      "🚨 Telemetry Fault Ingested",
+      `${newInc.title} — ERR: ₹${(newInc.err / 100000).toFixed(1)}L (${newInc.autonomy})`,
+      "warning"
+    );
+  },
+
+  injectNewIncident() {
+    pulseStore.injectFault("random");
   },
 
   toggleAutoPilot() {
-    state = { ...state, autoPilot: !state.autoPilot };
+    const nextState = !state.autoPilot;
+    state = { ...state, autoPilot: nextState };
     emitChange();
+
+    if (autoPilotTimer) {
+      clearInterval(autoPilotTimer);
+      autoPilotTimer = null;
+    }
+
+    if (nextState) {
+      pulseStore.showToast(
+        "🤖 Meridian Autopilot Active",
+        "Autonomous agent is continuously scanning telemetry, querying Gemini, and executing bounded actions.",
+        "success"
+      );
+      runAutoPilotCycle();
+      autoPilotTimer = setInterval(runAutoPilotCycle, 7000);
+    } else {
+      pulseStore.showToast(
+        "⏸️ Autopilot Paused",
+        "Orchestrator returned to manual operator supervision mode.",
+        "info"
+      );
+    }
   },
 
   resetDemoState() {
+    if (autoPilotTimer) {
+      clearInterval(autoPilotTimer);
+      autoPilotTimer = null;
+    }
+
     state = {
       incidents: INITIAL_INCIDENTS,
       auditLogs: INITIAL_AUDIT_LOGS,
@@ -475,9 +688,11 @@ export const pulseStore = {
       demoStep: 1,
       nodeStates: { 0: "at-risk", 1: "at-risk", 2: "at-risk", 3: "at-risk" },
       liveAiDiagnosis: {},
-      diagnosingIncidentId: null
+      diagnosingIncidentId: null,
+      toast: null
     };
     emitChange();
+    pulseStore.showToast("🔄 Demo State Reset", "All incidents and telemetry restored to baseline.", "info");
   },
 
   async runLiveGeminiDiagnosis(incidentId: string) {
@@ -539,9 +754,12 @@ export function usePulseStore() {
     executeRecovery: pulseStore.executeRecovery,
     triggerFailure: pulseStore.triggerFailure,
     injectNewIncident: pulseStore.injectNewIncident,
+    injectFault: pulseStore.injectFault,
     toggleAutoPilot: pulseStore.toggleAutoPilot,
     resetDemoState: pulseStore.resetDemoState,
-    runLiveGeminiDiagnosis: pulseStore.runLiveGeminiDiagnosis
+    runLiveGeminiDiagnosis: pulseStore.runLiveGeminiDiagnosis,
+    showToast: pulseStore.showToast,
+    dismissToast: pulseStore.dismissToast
   };
 }
 

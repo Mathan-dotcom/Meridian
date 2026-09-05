@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { BackgroundVideo } from "@/app/components/background-video";
+import { ToastNotification } from "@/app/components/toast-notification";
+import { AiCopilotDrawer } from "@/app/components/ai-copilot-drawer";
 
 export const metadata: Metadata = {
   title: "Meridian — Revenue Recovery Orchestrator",
@@ -23,7 +25,9 @@ export default function RootLayout({
     <html lang="en" data-theme="meridian" suppressHydrationWarning>
       <body suppressHydrationWarning className="bg-transparent text-foreground antialiased selection:bg-white selection:text-black relative min-h-screen">
         <BackgroundVideo />
+        <ToastNotification />
         {children}
+        <AiCopilotDrawer />
       </body>
     </html>
   );
