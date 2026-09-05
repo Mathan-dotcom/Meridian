@@ -278,6 +278,37 @@ function emitChange() {
   }
 }
 
+async function syncWithServer() {
+  try {
+    const res = await fetch("/api/incidents");
+    if (!res.ok) return;
+    const json = await res.json();
+    if (json.success && json.data) {
+      const serverData = json.data;
+      if (Array.isArray(serverData.incidents) && serverData.incidents.length > 0) {
+        state = {
+          ...state,
+          incidents: serverData.incidents,
+          auditLogs: serverData.auditLogs || state.auditLogs,
+          totalRecoverableToday: serverData.totalRecoverableToday ?? state.totalRecoverableToday,
+          totalRecoveredToday: serverData.totalRecoveredToday ?? state.totalRecoveredToday,
+          nodeStates: serverData.nodeStates || state.nodeStates
+        };
+        emitChange();
+      }
+    }
+  } catch {
+    // Silent fallback
+  }
+}
+
+if (typeof window !== "undefined") {
+  // Sync on initial load
+  syncWithServer();
+  // Live polling every 6 seconds for incoming real webhooks and telemetry
+  setInterval(syncWithServer, 6000);
+}
+
 let autoPilotTimer: any = null;
 
 function runAutoPilotCycle() {
@@ -419,6 +450,13 @@ export const pulseStore = {
         nodeStates: newNodeStates
       };
       emitChange();
+
+      // Report execution to server for live persistence & audit recording
+      fetch("/api/agent/execute", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ incidentId: id, forceFailure: false })
+      }).catch(() => {});
     }, 600);
   },
 
@@ -467,6 +505,13 @@ export const pulseStore = {
         nodeStates: newNodeStates
       };
       emitChange();
+
+      // Report simulated rollback to server for persistent audit recording
+      fetch("/api/agent/execute", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ incidentId: id, forceFailure: true })
+      }).catch(() => {});
     }, 350);
   },
 
@@ -693,6 +738,13 @@ export const pulseStore = {
     };
     emitChange();
     pulseStore.showToast("🔄 Demo State Reset", "All incidents and telemetry restored to baseline.", "info");
+
+    // Sync reset with server
+    fetch("/api/incidents", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "reset" })
+    }).catch(() => {});
   },
 
   async runLiveGeminiDiagnosis(incidentId: string) {
