@@ -1,8 +1,28 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Fraunces, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { BackgroundVideo } from "@/app/components/background-video";
 import { ToastNotification } from "@/app/components/toast-notification";
 import { AiCopilotDrawer } from "@/app/components/ai-copilot-drawer";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-ui",
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Meridian — Revenue Recovery Orchestrator",
@@ -22,8 +42,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="meridian" suppressHydrationWarning>
-      <body suppressHydrationWarning className="bg-transparent text-foreground antialiased selection:bg-white selection:text-black relative min-h-screen">
+    <html lang="en" data-theme="meridian" suppressHydrationWarning className={`${spaceGrotesk.variable} ${fraunces.variable} ${ibmPlexMono.variable}`}>
+      <body suppressHydrationWarning className="bg-transparent text-foreground antialiased selection:bg-white selection:text-black relative min-h-screen font-ui">
         <BackgroundVideo />
         <ToastNotification />
         {children}

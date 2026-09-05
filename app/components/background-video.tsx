@@ -7,6 +7,8 @@ export function BackgroundVideo() {
       <img
         src="/background.jpg"
         alt="Meridian Flow"
+        loading="eager"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover transform scale-[1.02] filter brightness-[0.75] contrast-[1.1] translate-z-0 will-change-transform"
         style={{ transform: "translate3d(0, 0, 0)" }}
       />
