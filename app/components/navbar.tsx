@@ -55,12 +55,6 @@ export function Navbar() {
           >
             Scope & Roadmap
           </Link>
-          <Link
-            href="/#demo-script"
-            className="hover:text-white transition-colors"
-          >
-            5-Min Pitch Script
-          </Link>
         </nav>
 
         {/* Action Button */}

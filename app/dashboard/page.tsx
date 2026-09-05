@@ -5,7 +5,6 @@ import { HeaderHero } from "@/app/components/header-hero";
 import { IncidentCard } from "@/app/components/incident-card";
 import { AuditTrail } from "@/app/components/audit-trail";
 import { DemoControls } from "@/app/components/demo-controls";
-import { DemoStepper } from "@/app/components/demo-stepper";
 import { IncidentDetailModal } from "@/app/components/incident-detail-modal";
 import { usePulseStore } from "@/app/lib/use-pulse-store";
 import { AnimatePresence } from "framer-motion";
@@ -26,13 +25,8 @@ export default function DashboardPage() {
 
       {/* Main Mission Control Dashboard Workspace */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-6 md:px-8 py-8 space-y-8">
-        {/* Guided 5-Minute Demo Script Stepper (§14) */}
-        <ScrollFade direction="up">
-          <DemoStepper />
-        </ScrollFade>
-
         {/* Manual Simulation Controls */}
-        <ScrollFade direction="up" delay={0.05}>
+        <ScrollFade direction="up">
           <DemoControls />
         </ScrollFade>
 

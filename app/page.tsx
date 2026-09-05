@@ -6,7 +6,6 @@ import { ProblemSection } from "@/app/components/landing/problem-section";
 import { ArchitectureSection } from "@/app/components/landing/architecture-section";
 import { MathSection } from "@/app/components/landing/math-section";
 import { ScopeMatrix } from "@/app/components/landing/scope-matrix";
-import { DemoScriptSection } from "@/app/components/landing/demo-script-section";
 import Link from "next/link";
 import { Activity } from "lucide-react";
 
@@ -23,7 +22,6 @@ export default function LandingPage() {
         <ArchitectureSection />
         <MathSection />
         <ScopeMatrix />
-        <DemoScriptSection />
       </main>
 
       {/* Footer */}
