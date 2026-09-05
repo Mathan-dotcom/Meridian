@@ -11,6 +11,7 @@ import { AnimatePresence } from "framer-motion";
 import { Layers, Activity } from "lucide-react";
 
 import { ScrollFade } from "@/app/components/scroll-fade";
+import { Footer } from "@/app/components/footer";
 
 export default function DashboardPage() {
   const { incidents } = usePulseStore();
@@ -80,17 +81,7 @@ export default function DashboardPage() {
       <IncidentDetailModal />
 
       {/* War Room Footer */}
-      <footer className="border-t border-white/10 py-6 bg-black/50 backdrop-blur-2xl text-center font-mono text-micro text-zinc-400">
-        <div className="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-white">
-            <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_white] animate-pulse" />
-            <span>MERIDIAN REVENUE RECOVERY ORCHESTRATOR • RAZORPAY AI BUILDATHON TRACK 03</span>
-          </div>
-          <div className="text-zinc-400">
-            Monochrome Glassmorphic Edition • ERR Engine • Counterfactual Estimation Model
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
