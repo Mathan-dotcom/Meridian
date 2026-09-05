@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="meridian" suppressHydrationWarning>
-      <body className="bg-transparent text-foreground antialiased selection:bg-white selection:text-black relative min-h-screen">
+      <body suppressHydrationWarning className="bg-transparent text-foreground antialiased selection:bg-white selection:text-black relative min-h-screen">
         <BackgroundVideo />
         {children}
       </body>
